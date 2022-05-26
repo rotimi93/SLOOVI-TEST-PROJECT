@@ -22,15 +22,30 @@ db = client.sloovi
 users_collection = db["users"]
 templates_collection = db["templates"]
 
-@app.route('/', methods=["GET"])
+@app.route('/index/', methods=["GET"])
 def index():
-	return "App running"
+	email_addr = request.args.get('email_addr',None)
+	pwd = request.args.get('pwd', None)
+
+	print("Received:{0}".format(email_addr,pwd))
+
+	response = {}
+
+	if not email_addr and pwd:
+		response['ERROR'] = "No name found. Please send a email and Password required."
+	else:
+		response['Message'] = f"Welcome {email_addr} to our sloovi API!"
+		response['Pwd'] = f"Welcome {pwd} to our sloovi API!"
+
+	return jsonify(response)
 
 
-@app.route('/register', methods=["POST"])
+
+@app.route('/register/', methods=["POST"])
 @cross_origin()
 def register():
 	try:
+		param = request.form.get('email_addr')
 		new_user = request.get_json() 
 		new_user["password"] = hashlib.sha256(new_user["password"].encode("utf-8")).hexdigest()
 		doc = users_collection.find_one({"email": new_user["email"]})
@@ -121,8 +136,4 @@ def deleteTemplate(id):
 		return jsonify({'msg': 'Template not found'}), 200
 	except Exception as ex:
 		return jsonify({'msg': 'Something went wrong'}), 500
-	
-if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
 
