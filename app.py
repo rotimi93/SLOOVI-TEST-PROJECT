@@ -24,31 +24,31 @@ templates_collection = db["templates"]
 
 @app.route('/index/', methods=["GET"])
 def index():
-	email_addr = request.args.get('email_addr',None)
-	pwd = request.args.get('pwd', None)
+	email = request.args.get('email',None)
+	password = request.args.get('password', None)
 
-	print("Received:{0}".format(email_addr,pwd))
+	print("Received:{0}".format(email,password))
 
 	response = {}
 
-	if not email_addr and pwd:
-		response['ERROR'] = "No name found. Please send a email and Password required."
+	if not email and password:
+		response['ERROR'] = "No email/pwd found. Please send a email and Password required."
 	else:
-		response['Message'] = f"Welcome {email_addr} to our sloovi API!"
-		response['Pwd'] = f"Welcome {pwd} to our sloovi API!"
+		response['email'] = f"Welcome to our sloovi API! | {email}"
+		response['password'] = f"Welcome to our sloovi API! | reg-{password}"
 
 	return jsonify(response)
 
-
-
-@app.route('/register/', methods=["POST"])
+@app.route('/register', methods=["POST"])
 @cross_origin()
 def register():
 	try:
-		param = request.form.get('email_addr')
-		new_user = request.get_json() 
-		new_user["password"] = hashlib.sha256(new_user["password"].encode("utf-8")).hexdigest()
-		doc = users_collection.find_one({"email": new_user["email"]})
+
+		new_user = request.get_json()
+		email = new_user.request_data['email']
+		password = new_user.request_data['password']
+		new_user[password] = hashlib.sha256(new_user[password].encode("utf-8")).hexdigest()
+		doc = users_collection.find_one({"email": new_user[email]})
 		if not doc:
 			users_collection.insert_one(new_user)
 			return jsonify({'msg': 'User created successfully'}), 201
