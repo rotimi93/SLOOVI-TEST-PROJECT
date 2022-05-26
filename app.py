@@ -121,4 +121,8 @@ def deleteTemplate(id):
 		return jsonify({'msg': 'Template not found'}), 200
 	except Exception as ex:
 		return jsonify({'msg': 'Something went wrong'}), 500
+	
+if __name__ == '__main__':
+    # Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, port=5000)
 
