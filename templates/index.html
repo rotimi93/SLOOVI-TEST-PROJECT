@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sloovi-Form</title>
+</head>
+<body>
+
+<h1>Welcome to Sloovi Api form</h1>
+<h3>My name is Olakunle Alaba Michael.</h3>
+
+<h3>Form</h3>
+<form action="{{ url_for('register') }}" method="post">
+	<label for="First Name">First Name:</label>
+	<input type="text" name="f-name"><br><br>
+
+	<label for="Last Name">Last Name:</label>
+	<input type="text" name="l-name"></br><br>
+
+	<label for="Email">Email:</label>
+	<input type="email" name="email"></br><br>
+
+	<label for="Password">Password:</label>
+	<input type="password" name="pwd"></br><br>
+
+	<input type="submit" value="Submit">
+
+</form>
+</body>
+</html>
