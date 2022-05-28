@@ -49,7 +49,8 @@ def login():
 		user_from_db = users_collection.find_one({'email': login_details['email'], 'password':login_details['password']})
 
 		if user_from_db:
-			encrpted_password = hashlib.sha256(user_from_db['password'].encode("utf-8")).hexdigest()
+			#encrpted_password = hashlib.sha256(user_from_db['password'].encode("utf-8")).hexdigest()
+			encrpted_password = user_from_db['password']
 			if encrpted_password == user_from_db['password']:
 				access_token = create_access_token(identity=str(user_from_db['_id']))
 				return jsonify(access_token=access_token), 200
