@@ -16,7 +16,7 @@ jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
 
-client = MongoClient(os.getenv("mongodb+srv://michael93:michael93@cluster0.cjdew.mongodb.net/?retryWrites=true&w=majority"))
+client = MongoClient("mongodb+srv://michael93:michael93@cluster0.cjdew.mongodb.net/?retryWrites=true&w=majority")
 db = client.sloovi
 users_collection = db.users_collection
 templates_collection = db.templates_collection
