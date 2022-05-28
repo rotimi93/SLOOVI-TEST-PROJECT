@@ -18,8 +18,8 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
 
 client = MongoClient(os.getenv("mongodb+srv://michael93:michael93@cluster0.cjdew.mongodb.net/?retryWrites=true&w=majority"))
 db = client.sloovi
-users_collection = db.users
-templates_collection = db.templates
+users_collection = db.users_collection
+templates_collection = db.templates_collection
 
 @app.route('/', methods=["GET"])
 def index():
