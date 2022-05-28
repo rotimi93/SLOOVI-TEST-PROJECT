@@ -56,7 +56,7 @@ def login():
 
 		return jsonify({'msg': 'The username or password is incorrect'}), 401
 	except Exception as ex:
-		return jsonify({'msg': ex}), 500
+		return jsonify({'msg': 'Something went wrong'}), 500
 
 
 @app.route("/template", methods=["GET"])
